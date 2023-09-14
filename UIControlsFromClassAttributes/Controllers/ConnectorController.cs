@@ -35,7 +35,7 @@ public class ConnectorController : Controller
                 break;
         }
     
-        return PartialView("_ConnectorConfig", model);
+        return View("_ConnectorConfig", model);
     }
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
