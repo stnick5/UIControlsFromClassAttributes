@@ -1,0 +1,40 @@
+﻿@using UIControlsFromClassAttributes.Models.ConnectorConfigurationObjects
+
+@model ConnectorConfigModel
+
+@{
+    ViewData["Title"] = "Select Connector";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('#connectorSelect').change(function () {
+        var selectedValue = $(this).val();
+        
+        $.ajax({
+              url: '@Url.Action("Connector", "Connector")',
+              data: { connectorType: selectedValue },
+              success: function(result) {
+                  console.log(result);
+                $('#UIControlsContainer').html(result);
+              }
+            });
+    })
+    });
+</script>
+
+<h1>@ViewData["Title"]</h1>
+
+<div id="SelectorContainer">
+    <select id="connectorSelect">
+        <option value="0">Net2</option>
+        <option value="1">Cascade</option>
+        <option value="2">TR515</option>
+    </select>
+</div>
+
+<div id="UIControlsContainer">
+    await @Html.PartialAsync("_ConnectorConfig", Model)
+</div>
+

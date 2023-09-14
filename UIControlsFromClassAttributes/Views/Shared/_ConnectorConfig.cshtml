@@ -1,0 +1,35 @@
+﻿@using UIControlsFromClassAttributes.Models.Attributes
+@using UIControlsFromClassAttributes.Models.Enums
+@model UIControlsFromClassAttributes.Models.ConnectorConfigurationObjects.ConnectorConfigModel
+
+@{
+    ViewData["Title"] = "Select Connector";
+    
+    var type = Model.GetType();
+    var properties = type.GetProperties();
+    foreach (var property in properties)
+    {
+        var attributes = property.GetCustomAttributes(typeof(UiControlAttribute), false);
+        if (attributes.Length > 0)
+        {
+            var uiControl = ((UiControlAttribute)attributes[0]).UiControl;
+            switch (uiControl)
+            {
+                case UiControl.TextBox:
+                    @:<div>
+                    <label>@property.Name</label>
+                    <input type="text" value="@property.GetValue(Model)" class="form-control"/>
+                    @:</div>
+                    break;
+                    
+                    case UiControl.NumberPicker:
+                        @:<div>
+                        <label>@property.Name</label>
+                        <input type="number" value="@property.GetValue(Model)" class="form-control"/>
+                        @:</div>
+                        break;
+                // add here the cases for other control types
+            }
+        }
+    }
+}
